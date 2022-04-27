@@ -33,16 +33,26 @@ const articleSchema = {
 // specify the schema, articleSchema
 const Article = mongoose.model("Article", articleSchema);
 
-// GET
+// GET request
 app.get("/articles", (req, res) => {
   // READ
   Article.find((err, foundArticles) => {
     if (!err) {
       res.send(foundArticles);
     } else {
-      res.send(err)
+      res.send(err);
     }
   });
+});
+
+// POST request
+app.post("/articles", (req, res) => {
+  const newArticle = new Article({
+    title: req.body.title,
+    content: req.body.content
+  });
+
+  newArticle.save();
 });
 
 app.listen(port, () => {
