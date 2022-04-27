@@ -33,8 +33,10 @@ const articleSchema = {
 // specify the schema, articleSchema
 const Article = mongoose.model("Article", articleSchema);
 
+app.route("/articles")
+
 // GET request
-app.get("/articles", (req, res) => {
+.get((req, res) => {
   // READ
   Article.find((err, foundArticles) => {
     if (!err) {
@@ -43,10 +45,10 @@ app.get("/articles", (req, res) => {
       res.send(err);
     }
   });
-});
+}) // verify that there isn't a semicolon ; here, or the code will stop here
 
 // POST request
-app.post("/articles", (req, res) => {
+.post((req, res) => {
   const newArticle = new Article({
     title: req.body.title,
     content: req.body.content
@@ -61,10 +63,10 @@ app.post("/articles", (req, res) => {
       );
     }
   });
-});
+}) // verify that there isn't a semicolon ; here, or the code will stop here
 
 // DELETE request
-app.delete("/articles", (req, res) => {
+.delete((req, res) => {
   Article.deleteMany((err) => {
     if (!err) {
       res.send("Successfully deleted all articles on " + now.toUTCString());
@@ -74,7 +76,7 @@ app.delete("/articles", (req, res) => {
       );
     }
   });
-});
+}); // it is ok to have a semicolon ; here because we want the code to stop here
 
 app.listen(port, () => {
   console.log("Server is running on Port " + port + " on " + now.toUTCString());
