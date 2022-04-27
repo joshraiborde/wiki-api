@@ -52,7 +52,13 @@ app.post("/articles", (req, res) => {
     content: req.body.content
   });
 
-  newArticle.save();
+  newArticle.save((err) => {
+    if (!err) {
+      res.send("Successfully added a new article on " + now.toUTCString());
+    } else {
+      res.send(err + " Error, could not add a new article on " + now.toUTCString());
+    }
+  });
 });
 
 app.listen(port, () => {
