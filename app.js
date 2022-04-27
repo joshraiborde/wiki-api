@@ -56,7 +56,22 @@ app.post("/articles", (req, res) => {
     if (!err) {
       res.send("Successfully added a new article on " + now.toUTCString());
     } else {
-      res.send(err + " Error, could not add a new article on " + now.toUTCString());
+      res.send(
+        err + " Error, could not add a new article on " + now.toUTCString()
+      );
+    }
+  });
+});
+
+// DELETE request
+app.delete("/articles", (req, res) => {
+  Article.deleteMany((err) => {
+    if (!err) {
+      res.send("Successfully deleted all articles on " + now.toUTCString());
+    } else {
+      res.send(
+        err + " Error, could not delete all articles on " + now.toUTCString()
+      );
     }
   });
 });
