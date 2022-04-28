@@ -33,6 +33,9 @@ const articleSchema = {
 // specify the schema, articleSchema
 const Article = mongoose.model("Article", articleSchema);
 
+
+// ********* BELOW ARE REQUESTS TARGETTING ALL ARTICLES *************
+
 app.route("/articles")
 
 // GET request
@@ -77,6 +80,21 @@ app.route("/articles")
     }
   });
 }); // it is ok to have a semicolon ; here because we want the code to stop here
+
+// ********* BELOW ARE REQUESTS TARGETTING A SPECIFIC ARTICLE *************
+
+app.route("/articles/:articleTitle")
+.get((req, res) =>{
+
+  Article.findOne({title: req.params.articleTitle}, (err, foundArticle) => {
+    if (foundArticle) {
+      res.send(foundArticle)
+    } else {
+      res.send("No articles matching that title was found on " + now.toUTCString())
+    }
+  });
+});
+
 
 app.listen(port, () => {
   console.log("Server is running on Port " + port + " on " + now.toUTCString());
