@@ -84,8 +84,9 @@ app.route("/articles")
 // ********* BELOW ARE REQUESTS TARGETTING A SPECIFIC ARTICLE *************
 
 app.route("/articles/:articleTitle")
-.get((req, res) =>{
 
+// GET Request, gets one article title.
+.get((req, res) =>{
   Article.findOne({title: req.params.articleTitle}, (err, foundArticle) => {
     if (foundArticle) {
       res.send(foundArticle)
@@ -93,7 +94,20 @@ app.route("/articles/:articleTitle")
       res.send("No articles matching that title was found on " + now.toUTCString())
     }
   });
+}) // verify that there isn't a semicolon ; here, or the code will stop here
+
+// PUT request, updates the article's title and body.
+.put((req, res) => {
+  Article.replaceOne(
+    {title: req.params.articleTitle}, // this searches for the title.
+    {title: req.body.title, content: req.body.content}, // this updates the title and content.
+    (err) => {
+      if (!err) {
+        res.send("Successfully updated article on " + now.toUTCString())
+      }
+    });
 });
+
 
 
 app.listen(port, () => {
