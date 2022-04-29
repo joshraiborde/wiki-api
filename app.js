@@ -106,8 +106,22 @@ app.route("/articles/:articleTitle")
         res.send("Successfully updated article on " + now.toUTCString())
       }
     });
-});
+  }) // verify that there isn't a semicolon ; here, or the code will stop here
 
+// PATCH REQUEST will change a specific field in a specific document
+  .patch((req, res) => {
+    Article.updateOne(
+      {title: req.params.articleTitle},
+      {$set: req.body},
+      (err) => {
+        if (!err) {
+          res.send("Successfully updated article on " + now.toUTCString())
+        } else {
+          res.send(err + " on " + now.toUTCString())
+        }
+      }
+    );
+  }); // it is ok to have a semicolon ; here because we want the code to stop here
 
 
 app.listen(port, () => {
