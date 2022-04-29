@@ -121,6 +121,20 @@ app.route("/articles/:articleTitle")
         }
       }
     );
+  }) // verify that there isn't a semicolon ; here, or the code will stop here
+  
+  // DELETE REQUEST will delete a specifc document in the database
+  .delete((req,res) => {
+    Article.deleteOne(
+      {title: req.params.articleTitle},
+      (err) => {
+        if (!err) {
+          res.send("Successfully deleted the corresponding article on " + now.toUTCString())
+        } else {
+          res.send(err + " on " + now.toUTCString())
+        }
+      }
+    );
   }); // it is ok to have a semicolon ; here because we want the code to stop here
 
 
